@@ -1,0 +1,131 @@
+;solve this lab exam when A-E
+.model small
+.stack 100h
+
+.data  
+
+      msg1 db "Enter a chr: $"
+      msg2 db 10,13," $"
+    
+      msg5 db " $"     
+         NUM1 db ?
+         NUM2 db ?
+
+
+
+.code
+
+main proc
+   
+   mov ax, @data
+   mov ds,ax
+             
+    
+   ; mov ah,9
+   ; lea dx,msg1
+   ; int 21h
+    
+    
+    mov ah,1
+    
+    int 21h
+    mov NUM1,al 
+           
+    cmp NUM1,45h
+    JA outbound 
+    JE PRINT_A_E
+    
+    CMP NUM1,44h
+    JE PRINT_B_D
+    
+    CMP NUM1,43h
+    JE PRINT_C 
+    
+    CMP NUM1,42h
+    JE PRINT_B_D
+    
+    cmp NUM1,41h
+    JE PRINT_A_E
+    JB outbound 
+    
+     
+   outbound:
+    MOV AX,0
+    JMP exit 
+      
+   PRINT_B_D:
+        MOV ah, 02h
+    mov dl, 0Dh       
+    
+    int 21h
+    MOV dl, 0Ah       
+    int 21h
+
+    mov ax, 3        
+    add al, '0'      
+                     
+    mov bl, al       
+        mov CX, 3
+     jmp LOOPER
+     jmp exit 
+   
+   PRINT_C: 
+    
+    MOV ah, 02h
+    mov dl, 0Dh       
+    
+    int 21h
+    MOV dl, 0Ah       
+    int 21h
+
+    mov ax, 5        
+    add al, '0'      
+                     
+    mov bl, al       
+        mov CX, 5
+     jmp LOOPER
+     jmp exit 
+   
+   PRINT_A_E:
+
+
+    MOV ah, 02h
+    mov dl, 0Dh       
+    
+    int 21h
+    MOV dl, 0Ah       
+    int 21h
+
+    mov ax, 1        
+    add al, '0'      
+                     
+    mov bl, al       
+        mov CX, 1
+     jmp LOOPER
+     jmp exit         
+
+LOOPER:
+    cmp cx, 0
+    je exit
+
+PRINTER:
+    mov ah, 02h
+    mov dl, bl        
+    int 21h
+
+    mov dl, ' '      
+    int 21h
+
+    dec cx
+    jmp LOOPER
+
+exit:
+    mov ah, 4Ch
+    int 21h
+
+     
+     
+  main endp
+       end main
+       
+       
